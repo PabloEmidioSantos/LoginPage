@@ -1,15 +1,15 @@
 :root {
-	--background: #f5f7fb;
-	--surface: #ffffff;
-	--surface-soft: #f8fafc;
-	--text: #172033;
-	--muted: #667085;
-	--primary: #356ae6;
-	--primary-dark: #2855c5;
-	--border: #dfe4ec;
-	--success: #16835b;
-	--danger: #c0394b;
-	--shadow: 0 24px 60px rgba(30, 48, 82, 0.12);
+	--fundo: #f5f7fb;
+	--superficie: #ffffff;
+	--superficie-suave: #f8fafc;
+	--texto: #172033;
+	--texto-secundario: #667085;
+	--cor-principal: #356ae6;
+	--cor-principal-escura: #2855c5;
+	--borda: #dfe4ec;
+	--sucesso: #16835b;
+	--perigo: #c0394b;
+	--sombra: 0 24px 60px rgba(30, 48, 82, 0.12);
 }
 
 * { box-sizing: border-box; }
@@ -21,8 +21,8 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: linear-gradient(135deg, #eef3ff 0%, var(--background) 48%, #edf8f4 100%);
-	color: var(--text);
+	background: linear-gradient(135deg, #eef3ff 0%, var(--fundo) 48%, #edf8f4 100%);
+	color: var(--texto);
 	font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
@@ -31,10 +31,10 @@ body {
 	overflow: hidden;
 	display: grid;
 	grid-template-columns: 0.9fr 1.1fr;
-	background: var(--surface);
+	background: var(--superficie);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 22px;
-	box-shadow: var(--shadow);
+	box-shadow: var(--sombra);
 }
 
 .intro {
@@ -94,7 +94,7 @@ body {
 .forms { padding: 48px clamp(28px, 5vw, 66px); }
 .section-heading { margin-bottom: 26px; }
 .section-heading h2 { margin: 0 0 8px; font-size: 1.75rem; }
-.section-heading p { margin: 0; color: var(--muted); line-height: 1.5; }
+.section-heading p { margin: 0; color: var(--texto-secundario); line-height: 1.5; }
 
 .tabs {
 	display: flex;
@@ -102,7 +102,7 @@ body {
 	margin-bottom: 28px;
 	padding: 4px;
 	border-radius: 10px;
-	background: var(--surface-soft);
+	background: var(--superficie-suave);
 }
 
 .tab {
@@ -111,15 +111,15 @@ body {
 	border: 0;
 	border-radius: 7px;
 	background: transparent;
-	color: var(--muted);
+	color: var(--texto-secundario);
 	cursor: pointer;
 	font: inherit;
 	font-weight: 700;
 }
 
 .tab.active {
-	background: var(--surface);
-	color: var(--primary);
+	background: var(--superficie);
+	color: var(--cor-principal);
 	box-shadow: 0 2px 8px rgba(30, 48, 82, 0.08);
 }
 
@@ -131,17 +131,17 @@ label { display: block; margin-bottom: 7px; font-size: 0.9rem; font-weight: 700;
 input {
 	width: 100%;
 	padding: 13px 14px;
-	border: 1px solid var(--border);
+	border: 1px solid var(--borda);
 	border-radius: 8px;
 	outline: 0;
-	background: var(--surface);
-	color: var(--text);
+	background: var(--superficie);
+	color: var(--texto);
 	font: inherit;
 	transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus {
-	border-color: var(--primary);
+	border-color: var(--cor-principal);
 	box-shadow: 0 0 0 3px rgba(53, 106, 230, 0.14);
 }
 
@@ -156,7 +156,7 @@ input:focus {
 	transform: translateY(-50%);
 	border: 0;
 	background: transparent;
-	color: var(--primary);
+	color: var(--cor-principal);
 	cursor: pointer;
 	font: inherit;
 	font-size: 0.8rem;
@@ -169,13 +169,13 @@ input:focus {
 	justify-content: space-between;
 	gap: 12px;
 	margin: 2px 0 22px;
-	color: var(--muted);
+	color: var(--texto-secundario);
 	font-size: 0.85rem;
 }
 
 .checkbox { display: flex; align-items: center; gap: 8px; }
-.checkbox input { width: auto; accent-color: var(--primary); }
-a { color: var(--primary); font-weight: 600; text-decoration: none; }
+.checkbox input { width: auto; accent-color: var(--cor-principal); }
+a { color: var(--cor-principal); font-weight: 600; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 .submit-button {
@@ -183,7 +183,7 @@ a:hover { text-decoration: underline; }
 	padding: 14px;
 	border: 0;
 	border-radius: 8px;
-	background: var(--primary);
+	background: var(--cor-principal);
 	color: white;
 	cursor: pointer;
 	font: inherit;
@@ -191,7 +191,7 @@ a:hover { text-decoration: underline; }
 	transition: background 0.2s, transform 0.2s;
 }
 
-.submit-button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.submit-button:hover { background: var(--cor-principal-escura); transform: translateY(-1px); }
 .submit-button:disabled { cursor: wait; opacity: 0.65; transform: none; }
 
 .message {
@@ -201,12 +201,12 @@ a:hover { text-decoration: underline; }
 	line-height: 1.4;
 }
 
-.message.success { color: var(--success); }
-.message.error { color: var(--danger); }
+.message.success { color: var(--sucesso); }
+.message.error { color: var(--perigo); }
 
 .fine-print {
 	margin: 24px 0 0;
-	color: var(--muted);
+	color: var(--texto-secundario);
 	font-size: 0.78rem;
 	line-height: 1.5;
 	text-align: center;

@@ -1,101 +1,101 @@
 "use strict";
 
-const tabs = document.querySelectorAll(".tab");
-const forms = document.querySelectorAll(".form");
+const abas = document.querySelectorAll(".tab");
+const formularios = document.querySelectorAll(".form");
 
-function switchForm(targetId) {
-	tabs.forEach((tab) => {
-		const isActive = tab.dataset.target === targetId;
-		tab.classList.toggle("active", isActive);
-		tab.setAttribute("aria-selected", String(isActive));
+function alternarFormulario(idAlvo) {
+	abas.forEach((aba) => {
+		const estaAtiva = aba.dataset.target === idAlvo;
+		aba.classList.toggle("active", estaAtiva);
+		aba.setAttribute("aria-selected", String(estaAtiva));
 	});
 
-	forms.forEach((form) => {
-		form.classList.toggle("active", form.id === targetId);
+	formularios.forEach((formulario) => {
+		formulario.classList.toggle("active", formulario.id === idAlvo);
 	});
 }
 
-tabs.forEach((tab) => {
-	tab.addEventListener("click", () => switchForm(tab.dataset.target));
+abas.forEach((aba) => {
+	aba.addEventListener("click", () => alternarFormulario(aba.dataset.target));
 });
 
-document.querySelectorAll(".show-password").forEach((button) => {
-	button.addEventListener("click", () => {
-		const input = document.getElementById(button.dataset.password);
-		const showing = input.type === "text";
-		input.type = showing ? "password" : "text";
-		button.textContent = showing ? "Mostrar" : "Ocultar";
+document.querySelectorAll(".show-password").forEach((botao) => {
+	botao.addEventListener("click", () => {
+		const campoSenha = document.getElementById(botao.dataset.password);
+		const senhaVisivel = campoSenha.type === "text";
+		campoSenha.type = senhaVisivel ? "password" : "text";
+		botao.textContent = senhaVisivel ? "Mostrar" : "Ocultar";
 	});
 });
 
-function showMessage(form, text, type) {
-	const message = form.querySelector(".message");
-	message.textContent = text;
-	message.className = `message ${type}`;
+function exibirMensagem(formulario, texto, tipo) {
+	const mensagem = formulario.querySelector(".message");
+	mensagem.textContent = texto;
+	mensagem.className = `message ${tipo}`;
 }
 
-function validateForm(form) {
-	const password = form.elements.password;
-	const confirmation = form.elements.passwordConfirmation;
+function validarFormulario(formulario) {
+	const senha = formulario.elements.password;
+	const confirmacaoSenha = formulario.elements.passwordConfirmation;
 
-	if (!form.checkValidity()) {
-		showMessage(form, "Revise os campos destacados e tente novamente.", "error");
-		form.reportValidity();
+	if (!formulario.checkValidity()) {
+		exibirMensagem(formulario, "Revise os campos destacados e tente novamente.", "error");
+		formulario.reportValidity();
 		return false;
 	}
 
-	if (confirmation && password.value !== confirmation.value) {
-		showMessage(form, "As senhas não são iguais.", "error");
-		confirmation.focus();
+	if (confirmacaoSenha && senha.value !== confirmacaoSenha.value) {
+		exibirMensagem(formulario, "As senhas não são iguais.", "error");
+		confirmacaoSenha.focus();
 		return false;
 	}
 
 	return true;
 }
 
-async function submitForm(form) {
-	const formData = new FormData(form);
-	const userData = Object.fromEntries(formData.entries());
-	const button = form.querySelector(".submit-button");
+async function enviarFormulario(formulario) {
+	const dadosFormulario = new FormData(formulario);
+	const dadosUsuario = Object.fromEntries(dadosFormulario.entries());
+	const botao = formulario.querySelector(".submit-button");
 
-	button.disabled = true;
-	button.textContent = "Processando...";
+	botao.disabled = true;
+	botao.textContent = "Processando...";
 
 	try {
-		const result = form.id === "register-form"
-			? await registerUser(userData)
-			: await loginUser(userData);
-		showMessage(form, result.message, "success");
-	} catch (error) {
-		showMessage(form, error.message, "error");
+		const resultado = formulario.id === "register-form"
+			? await cadastrarUsuario(dadosUsuario)
+			: await autenticarUsuario(dadosUsuario);
+		exibirMensagem(formulario, resultado.message, "success");
+	} catch (erro) {
+		exibirMensagem(formulario, erro.message, "error");
 	} finally {
-		button.disabled = false;
-		button.textContent = form.id === "register-form" ? "Criar minha conta" : "Entrar na conta";
+		botao.disabled = false;
+		botao.textContent = formulario.id === "register-form" ? "Criar minha conta" : "Entrar na conta";
 	}
 }
 
-document.querySelectorAll(".form").forEach((form) => {
-	form.addEventListener("submit", (event) => {
-		event.preventDefault();
-		if (validateForm(form)) submitForm(form);
+document.querySelectorAll(".form").forEach((formulario) => {
+	formulario.addEventListener("submit", (evento) => {
+		evento.preventDefault();
+		if (validarFormulario(formulario)) enviarFormulario(formulario);
 	});
 });
 
-document.querySelector('[data-action="forgot-password"]').addEventListener("click", async (event) => {
-	event.preventDefault();
-	const form = document.getElementById("login-form");
-	const email = form.elements.email.value.trim();
+document.querySelector('[data-action="forgot-password"]').addEventListener("click", async (evento) => {
+	evento.preventDefault();
+	const formulario = document.getElementById("login-form");
+	const enderecoEmail = formulario.elements.email.value.trim();
 
-	if (!email) {
-		showMessage(form, "Informe seu e-mail para recuperar a senha.", "error");
-		form.elements.email.focus();
+	if (!enderecoEmail) {
+		exibirMensagem(formulario, "Informe seu e-mail para recuperar a senha.", "error");
+		formulario.elements.email.focus();
 		return;
 	}
 
 	try {
-		const result = await requestPasswordReset(email);
-		showMessage(form, result.message, "success");
-	} catch (error) {
-		showMessage(form, error.message, "error");
+		const resultado = await solicitarRedefinicaoSenha(enderecoEmail);
+		exibirMensagem(formulario, resultado.message, "success");
+	} catch (erro) {
+		exibirMensagem(formulario, erro.message, "error");
 	}
 });
